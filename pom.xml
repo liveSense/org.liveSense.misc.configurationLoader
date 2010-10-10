@@ -19,16 +19,11 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.apache.felix</groupId>
-		<artifactId>felix-parent</artifactId>
-		<version>1.2.0</version>
-		<relativePath>../../pom/pom.xml</relativePath>
-	</parent>
+    <groupId>org.liveSense</groupId>
     <packaging>bundle</packaging>
-    <name>Apache Felix Initial Configuration Loader</name>
-    <description>Apache Felix Initial Configuration Loader service.</description>
-    <artifactId>org.apache.felix.configloader</artifactId>
+    <name>liveSense Initial Configuration Loader</name>
+    <description>liveSense Initial Configuration Loader service.</description>
+    <artifactId>org.liveSense.misc.configloader</artifactId>
     <version>1.0.0</version>
   <build>
     <plugins>
@@ -40,17 +35,17 @@
         <configuration>
           <instructions>
             <Private-Package>
-                org.apache.felix.configloader
+                org.liveSense.misc.configloader
             </Private-Package>
             <Import-Package>
-                org.apache.felix.configloader,
+                org.liveSense.misc.configloader,
                 org.osgi.service.log;resolution:=optional,
                 org.osgi.service.cm;resolution:=optional,
                 *
             </Import-Package>
-            <Bundle-Activator>org.apache.felix.configloader.ConfigurationLoader</Bundle-Activator>
+            <Bundle-Activator>org.liveSense.misc.configloader.ConfigurationLoader</Bundle-Activator>
             <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
-            <Bundle-Vendor>The Apache Software Foundation</Bundle-Vendor>
+            <Bundle-Vendor>liveSense</Bundle-Vendor>
             <_versionpolicy>[$(version;==;$(@)),$(version;+;$(@)))</_versionpolicy>
           </instructions>
         </configuration>
@@ -70,10 +65,5 @@
     </dependency>
   </dependencies>
 
-    <scm>
-      <connection>scm:svn:https://svn.apache.org/repos/asf/felix/releases/org.apache.felix.bundlerepository-1.4.0</connection>
-      <developerConnection>scm:svn:https://svn.apache.org/repos/asf/felix/releases/org.apache.felix.bundlerepository-1.4.0</developerConnection>
-      <url>scm:svn:https://svn.apache.org/repos/asf/felix/releases/org.apache.felix.bundlerepository-1.4.0</url>
-    </scm>
 </project>
 

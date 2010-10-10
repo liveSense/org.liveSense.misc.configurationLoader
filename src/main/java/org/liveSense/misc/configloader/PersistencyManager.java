@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.apache.felix.configloader;
+package org.liveSense.misc.configloader;
 
 import java.io.BufferedInputStream;
 import java.io.File;

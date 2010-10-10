@@ -16,12 +16,12 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.apache.felix.configloader;
+package org.liveSense.misc.configloader;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import org.apache.felix.configloader.ManifestHeader.Entry;
+import org.liveSense.misc.configloader.ManifestHeader.Entry;
 
 import org.osgi.framework.Bundle;
 
