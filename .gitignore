@@ -1,3 +1,7 @@
-target/*
 .svn
-war/*
+/target/*
+/war/*
+/.settings
+/.project
+/.classpath
+/nbactions.xml
