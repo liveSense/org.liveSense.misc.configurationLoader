@@ -1,6 +1,6 @@
 .svn
-/target/*
-/war/*
+/target
+/war
 /.settings
 /.project
 /.classpath
