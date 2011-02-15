@@ -19,6 +19,17 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
+      <parent>
+      <groupId>org.liveSense</groupId>
+      <artifactId>org.liveSense.parent</artifactId>
+      <version>1-SNAPSHOT</version>
+  </parent>
+  <scm>
+      <connection>scm:git:git://github.com/liveSense/org.liveSense.misc.configloader</connection>
+      <developerConnection>scm:git:git://github.com/liveSense/org.liveSense.misc.configloader</developerConnection>
+      <url>https://github.com/liveSense/org.liveSense.misc.configloader</url>
+  </scm>  
+
     <groupId>org.liveSense</groupId>
     <packaging>bundle</packaging>
     <name>liveSense Initial Configuration Loader</name>
@@ -55,12 +66,10 @@
     <dependency>
       <groupId>org.osgi</groupId>
       <artifactId>org.osgi.core</artifactId>
-      <version>4.2.0</version>
     </dependency>
     <dependency>
       <groupId>org.osgi</groupId>
       <artifactId>org.osgi.compendium</artifactId>
-      <version>4.2.0</version>
     </dependency>
   </dependencies>
 
