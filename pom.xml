@@ -35,7 +35,7 @@
     <name>liveSense Initial Configuration Loader</name>
     <description>liveSense Initial Configuration Loader service.</description>
     <artifactId>org.liveSense.misc.configloader</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
   <build>
     <plugins>
       <plugin>
