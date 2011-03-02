@@ -25,16 +25,16 @@
       <version>1-SNAPSHOT</version>
   </parent>
   <scm>
-      <connection>scm:git:git://github.com/liveSense/org.liveSense.misc.configloader</connection>
-      <developerConnection>scm:git:git://github.com/liveSense/org.liveSense.misc.configloader</developerConnection>
-      <url>https://github.com/liveSense/org.liveSense.misc.configloader</url>
+      <connection>scm:git:git://github.com/liveSense/org.liveSense.misc.configurationLoader.git</connection>
+      <developerConnection>scm:git:git://github.com/liveSense/org.liveSense.misc.configurationLoader.git</developerConnection>
+      <url>https://github.com/liveSense/org.liveSense.misc.configurationLoader</url>
   </scm>  
 
     <groupId>org.liveSense</groupId>
     <packaging>bundle</packaging>
     <name>liveSense Initial Configuration Loader</name>
     <description>liveSense Initial Configuration Loader service.</description>
-    <artifactId>org.liveSense.misc.configloader</artifactId>
+    <artifactId>org.liveSense.misc.configurationLoader</artifactId>
     <version>1.0.1-SNAPSHOT</version>
   <build>
     <plugins>
