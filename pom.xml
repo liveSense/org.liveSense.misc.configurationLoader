@@ -30,7 +30,6 @@
       <url>https://github.com/liveSense/org.liveSense.misc.configurationLoader</url>
   </scm>  
 
-    <groupId>org.liveSense</groupId>
     <packaging>bundle</packaging>
     <name>liveSense Initial Configuration Loader</name>
     <description>liveSense Initial Configuration Loader service.</description>
