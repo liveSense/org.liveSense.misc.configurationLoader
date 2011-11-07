@@ -265,7 +265,7 @@ public class ConfigurationLoader implements SynchronousBundleListener, BundleAct
 
     public boolean canHandle(URL artifact)
     {
-        return artifact.getFile().endsWith(".cfg");
+        return artifact.getFile().endsWith(".cfg") || artifact.getFile().endsWith(".config");
     }
 
     public void install(URL artifact) throws Exception
@@ -291,20 +291,31 @@ public class ConfigurationLoader implements SynchronousBundleListener, BundleAct
      * @return
      * @throws Exception
      */
-    boolean setConfig(URL f) throws Exception
+    @SuppressWarnings("unchecked")
+	boolean setConfig(URL f) throws Exception
     {
         Properties p = new Properties();
+
+        @SuppressWarnings("rawtypes")
+        Dictionary ht = new Hashtable();
+
         InputStream in = new BufferedInputStream(f.openStream());
         try
         {
-            in.mark(1);
-            boolean isXml = in.read() == '<';
-            in.reset();
-            if (isXml) {
-                p.loadFromXML(in);
-            } else {
-                p.load(in);
-            }
+        	// If the file name ends with .config, we using the Felix configuration format
+        	if (f.getFile().endsWith(".config")) {
+        		ht = ConfigurationHandler.read(in);
+        	} else {
+	            in.mark(1);
+	            boolean isXml = in.read() == '<';
+	            in.reset();
+	            if (isXml) {
+	                p.loadFromXML(in);
+	            } else {
+	                p.load(in);
+	            }
+	            ((Hashtable)ht).putAll(p);
+        	}
         }
         finally
         {
@@ -313,8 +324,6 @@ public class ConfigurationLoader implements SynchronousBundleListener, BundleAct
         Util.performSubstitution(p);
         String pid[] = parsePid(getName(f.getFile()));
 
-        Hashtable ht = new Hashtable();
-        ht.putAll(p);
         ht.put(CONFIGURATION_PROPERTY_NAME, getName(f.getFile()));
 
         Configuration config = getConfiguration(pid[0], pid[1]);
@@ -363,7 +372,14 @@ public class ConfigurationLoader implements SynchronousBundleListener, BundleAct
 
     String[] parsePid(String path)
     {
-        String pid = path.substring(0, path.length() - 4);
+        String pid = null;
+        
+        if (path.endsWith(".cfg")) {
+        	pid = path.substring(0, path.length() - 4);
+        } else if (path.endsWith(".config")) {
+        	pid = path.substring(0, path.length() - 7);
+        }
+
         int n = pid.indexOf('-');
         if (n > 0)
         {
