@@ -30,6 +30,8 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Properties;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;
@@ -321,26 +323,67 @@ public class ConfigurationLoader implements SynchronousBundleListener, BundleAct
         {
             in.close();
         }
-        Util.performSubstitution(p);
-        String pid[] = parsePid(getName(f.getFile()));
+        
+        // Searching for templated config entry.
+        // If we found one we get Java System properties
+        // named as the macros. The config became activated if that
+        // system proprty is set.
 
-        ht.put(CONFIGURATION_PROPERTY_NAME, getName(f.getFile()));
+    	Pattern macros = Pattern.compile("\\$\\{(.*?)\\}");
+    	boolean valid = true;
 
-        Configuration config = getConfiguration(pid[0], pid[1]);
+    	Enumeration enumr = ht.keys();
+    	while (enumr.hasMoreElements()) {
+    		Object key = enumr.nextElement();
+    		if (ht.get(key) instanceof String) {
+	    		String str = (String)ht.get(key);
+	        	if (str != null) {
+		    		Matcher matcher = macros.matcher(str);
+		            
+		        	HashSet<String> propNames = new HashSet<String>();
+		        	while (matcher.find()) {
+		        		System.out.println(matcher.group(1));
+		        		propNames.add(matcher.group(1));
+		        	}
+		        	
+		        	for (String prop : propNames) {
+		        		String sysProp = System.getProperty(prop);
+		        		if (sysProp == null) {
+		        			valid = false;
+		        		}
+		        		if (valid) {
+		        			str = str.replaceAll("\\$\\{"+prop+"\\}", sysProp);
+		        		}
+		        	}
+		        	if (valid) {
+		        		ht.put(key, str);
+		        	}
+	        	}
+    		}
+    	}
 
-        // Backuping parameters for restore
-        String persistanceName = pid[0]+(pid[1] == null ? "" : "-" + pid[1]);
-        if (config.getProperties() != null && config.getProperties().get(CONFIGURATION_PROPERTY_NAME) == null) {
-            if (persistence.load(persistanceName).isEmpty()) {
-                persistence.store(persistanceName, config.getProperties());
-            }
+        if (valid) {
+	        Util.performSubstitution(p);
+	        String pid[] = parsePid(getName(f.getFile()));
+	
+	        ht.put(CONFIGURATION_PROPERTY_NAME, getName(f.getFile()));
+	
+	        Configuration config = getConfiguration(pid[0], pid[1]);
+	
+	        // Backuping parameters for restore
+	        String persistanceName = pid[0]+(pid[1] == null ? "" : "-" + pid[1]);
+	        if (config.getProperties() != null && config.getProperties().get(CONFIGURATION_PROPERTY_NAME) == null) {
+	            if (persistence.load(persistanceName).isEmpty()) {
+	                persistence.store(persistanceName, config.getProperties());
+	            }
+	        }
+	
+	        if (config.getBundleLocation() != null)
+	        {
+	            config.setBundleLocation(null);
+	        }
+	        config.update(ht);
         }
-
-        if (config.getBundleLocation() != null)
-        {
-            config.setBundleLocation(null);
-        }
-        config.update(ht);
         return true;
     }
 
