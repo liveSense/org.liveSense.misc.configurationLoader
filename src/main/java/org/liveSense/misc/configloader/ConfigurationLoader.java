@@ -179,6 +179,9 @@ public class ConfigurationLoader implements SynchronousBundleListener, BundleAct
 
         services.debug("Registering bundle "+bundle.getSymbolicName()+" for configuration loading.");
 
+        registerBundleInternal(bundle);
+        
+        /*
         if (registerBundleInternal(bundle)) {
 
             // handle delayed bundles, might help now
@@ -201,6 +204,7 @@ public class ConfigurationLoader implements SynchronousBundleListener, BundleAct
             // add to delayed bundles - if this is not an update!
             delayedBundles.add(bundle);
         }
+        */
     }
 
     
@@ -248,6 +252,8 @@ public class ConfigurationLoader implements SynchronousBundleListener, BundleAct
             return;
         }
 
+        // TODO : A boolean scr options if checked the configuration loaded by configurationloader is removed when the bundle contains remved. Now the configuuration stays untouched
+        /*
         while (pathIter.hasNext()) {
             PathEntry path = (PathEntry)pathIter.next();
             Enumeration entries = bundle.getEntryPaths(path.getPath());
@@ -260,7 +266,7 @@ public class ConfigurationLoader implements SynchronousBundleListener, BundleAct
                     }
                 }
             }
-        }
+        } */
 
     }
 
@@ -342,7 +348,6 @@ public class ConfigurationLoader implements SynchronousBundleListener, BundleAct
 		            
 		        	HashSet<String> propNames = new HashSet<String>();
 		        	while (matcher.find()) {
-		        		System.out.println(matcher.group(1));
 		        		propNames.add(matcher.group(1));
 		        	}
 		        	
@@ -365,11 +370,11 @@ public class ConfigurationLoader implements SynchronousBundleListener, BundleAct
         if (valid) {
 	        Util.performSubstitution(p);
 	        String pid[] = parsePid(getName(f.getFile()));
-	
 	        ht.put(CONFIGURATION_PROPERTY_NAME, getName(f.getFile()));
 	
 	        Configuration config = getConfiguration(pid[0], pid[1]);
-	
+	        
+	        /*
 	        // Backuping parameters for restore
 	        String persistanceName = pid[0]+(pid[1] == null ? "" : "-" + pid[1]);
 	        if (config.getProperties() != null && config.getProperties().get(CONFIGURATION_PROPERTY_NAME) == null) {
@@ -377,12 +382,16 @@ public class ConfigurationLoader implements SynchronousBundleListener, BundleAct
 	                persistence.store(persistanceName, config.getProperties());
 	            }
 	        }
-	
-	        if (config.getBundleLocation() != null)
-	        {
+			*/
+	        if (config.getBundleLocation() != null) {
 	            config.setBundleLocation(null);
 	        }
-	        config.update(ht);
+	        
+	        // If the configuration does not created by configuration loader we update it
+	        // In other cases (for example the user modified the loaded config) there is no configuration overwrite
+	        if (config.getProperties() == null || config.getProperties().get(CONFIGURATION_PROPERTY_NAME) == null || !config.getProperties().get(CONFIGURATION_PROPERTY_NAME).equals(getName(f.getFile()))) {
+	        	config.update(ht);
+	        }
         }
         return true;
     }
@@ -401,6 +410,7 @@ public class ConfigurationLoader implements SynchronousBundleListener, BundleAct
         Configuration config = getConfiguration(pid[0], pid[1]);
         config.delete();
 
+        /*
         // Restore config if there is stored configuration presented
         String persistanceName = pid[0]+(pid[1] == null ? "" : "-" + pid[1]);
 
@@ -409,7 +419,7 @@ public class ConfigurationLoader implements SynchronousBundleListener, BundleAct
             config.update(dict);
             persistence.delete(persistanceName);
         }
-
+		*/
         return true;
     }
 
