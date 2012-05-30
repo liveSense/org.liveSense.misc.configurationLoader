@@ -31,7 +31,7 @@
   </scm>  
 
     <packaging>bundle</packaging>
-    <name>liveSense Initial Configuration Loader</name>
+    <name>liveSense :: Misc :: Initial Configuration Loader</name>
     <description>liveSense Initial Configuration Loader service.</description>
     <artifactId>org.liveSense.misc.configurationLoader</artifactId>
     <version>1.0.1-SNAPSHOT</version>
