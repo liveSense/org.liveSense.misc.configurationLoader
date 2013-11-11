@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<features name="liveSense-${liveSense.version}-misc-configurationLoader" xmlns="http://karaf.apache.org/xmlns/features/v1.0.0">
+	<feature name="liveSense-misc-configurationLoader" version="${liveSense.misc.configurationLoader.version}" description="liveSense misc configurationLoader">
+		<bundle>mvn:com.github.livesense/org.liveSense.misc.configurationLoader/${liveSense.misc.configurationLoader.version}</bundle>
+	</feature>
+</features>

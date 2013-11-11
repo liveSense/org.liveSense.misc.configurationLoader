@@ -23,7 +23,7 @@
       <groupId>com.github.livesense</groupId>
       <artifactId>org.liveSense.parent</artifactId>
       <version>2-SNAPSHOT</version>
-		<relativePath>../org.liveSense.parent</relativePath>
+		<relativePath>..</relativePath>
   </parent>
   <scm>
       <connection>scm:git:git://github.com/liveSense/org.liveSense.misc.configurationLoader.git</connection>
