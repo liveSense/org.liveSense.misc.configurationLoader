@@ -22,9 +22,11 @@
     <parent>
       <groupId>com.github.livesense</groupId>
       <artifactId>org.liveSense.parent</artifactId>
-      <version>2-SNAPSHOT</version>
+      <version>1.0.3</version>
 		<relativePath>..</relativePath>
   </parent>
+  <version>1.0.3-SNAPSHOT</version>
+
 	<scm>
 		<connection>scm:git:https://github.com/liveSense/org.liveSense.misc.configurationLoader.git</connection>
 		<developerConnection>scm:git:https://github.com/liveSense/org.liveSense.misc.configurationLoader.git</developerConnection>
@@ -35,7 +37,6 @@
     <name>liveSense :: Misc :: Initial Configuration Loader</name>
     <description>liveSense Initial Configuration Loader service.</description>
     <artifactId>org.liveSense.misc.configurationLoader</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
   <build>
     <plugins>
       <plugin>
