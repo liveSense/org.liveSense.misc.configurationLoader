@@ -70,7 +70,6 @@ public class ConfigurationLoader implements SynchronousBundleListener, BundleAct
 	 * @param event The <code>BundleEvent</code> representing the bundle state
 	 *            change.
 	 */
-	@Override
 	public void bundleChanged(BundleEvent event) {
 
 		//
@@ -105,11 +104,10 @@ public class ConfigurationLoader implements SynchronousBundleListener, BundleAct
 	}
 
 
-	@Override
 	public void start(BundleContext context) throws Exception {
 
 		services = new ServiceMediator(context);
-		configurationAdmin = services.getConfigurationAdminService(ServiceMediator.NO_WAIT);
+		configurationAdmin = services.getConfigurationAdminService(10000);
 		context.addBundleListener(this);
 
 		int ignored = 0;
@@ -147,8 +145,6 @@ public class ConfigurationLoader implements SynchronousBundleListener, BundleAct
 				} else {
 					ignored++;
 				}
-
-
 			}
 			services.debug(
 					"Out of "+bundles.length+" bundles, "+ignored+" were not in a suitable state for initial config loading");
@@ -160,7 +156,6 @@ public class ConfigurationLoader implements SynchronousBundleListener, BundleAct
 
 	}
 
-	@Override
 	public void stop(BundleContext context) throws Exception {
 		context.removeBundleListener(this);
 
@@ -183,32 +178,29 @@ public class ConfigurationLoader implements SynchronousBundleListener, BundleAct
 
 		services.debug("Registering bundle "+bundle.getSymbolicName()+" for configuration loading.");
 
-		registerBundleInternal(bundle);
 
-		/*
-        if (registerBundleInternal(bundle)) {
+		if (registerBundleInternal(bundle)) {
 
-            // handle delayed bundles, might help now
-            int currentSize = -1;
-            for (int i = delayedBundles.size(); i > 0
-                    && currentSize != delayedBundles.size()
-                    && !delayedBundles.isEmpty(); i--) {
+			// handle delayed bundles, might help now
+			int currentSize = -1;
+			for (int i = delayedBundles.size(); i > 0
+					&& currentSize != delayedBundles.size()
+					&& !delayedBundles.isEmpty(); i--) {
 
-                Iterator di = delayedBundles.iterator();
-                while (di.hasNext()) {
-                    Bundle delayed = (Bundle)di.next();
-                    if (registerBundleInternal(delayed)) {
-                        di.remove();
-                    }
-                }
-                currentSize = delayedBundles.size();
-            }
+				Iterator di = delayedBundles.iterator();
+				while (di.hasNext()) {
+					Bundle delayed = (Bundle)di.next();
+					if (registerBundleInternal(delayed)) {
+						di.remove();
+					}
+				}
+				currentSize = delayedBundles.size();
+			}
 
-        } else {
-            // add to delayed bundles - if this is not an update!
-            delayedBundles.add(bundle);
-        }
-		 */
+		} else {
+			// add to delayed bundles - if this is not an update!
+			delayedBundles.add(bundle);
+		}
 	}
 
 
